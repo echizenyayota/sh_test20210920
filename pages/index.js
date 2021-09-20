@@ -1,4 +1,4 @@
-import { Heading, Page, Layout, Card, EmptyState } from "@shopify/polaris";
+import { Heading, Page, TextStyle, Layout, Card, EmptyState } from "@shopify/polaris";
 
 const img = 'https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg';
 
