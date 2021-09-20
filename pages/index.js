@@ -1,18 +1,21 @@
-// import { Heading, Page } from "@shopify/polaris";
+import { Heading, Page, Layout, Card, EmptyState } from "@shopify/polaris";
 
-// const Index = () => (
-//   <Page>
-//     <Heading>Shopify app with Node and React 🎉</Heading>
-//   </Page>
-// );
-
-// export default Index;
-
-import { Heading, Page } from "@shopify/polaris";
+const img = 'https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg';
 
 const Index = () => (
   <Page>
-    <Heading>Hello World!</Heading>
+    <Layout>
+      <EmptyState
+        heading="Discout your products"
+        action={{
+          content: 'Select products', 
+          onAction: () => this.setState ({ open: true }),
+        }}
+        image={img}
+      >
+        <p>Select products to change their price temporarily.</p>
+      </EmptyState>
+    </Layout>
   </Page>
 );
 
