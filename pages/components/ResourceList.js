@@ -10,7 +10,7 @@ import {
 } from '@shopify/polaris';
 import store from 'store-js';
 import { Redirect } from '@shopify/app-bridge/actions';
-import { context } from '@shopify/app-bridge-react';
+import { Context, context } from '@shopify/app-bridge-react';
 
 const GET_PRODUCTS_BY_ID = gql`
   query getProducts ($ids: [ID!]!) {
@@ -40,3 +40,21 @@ const GET_PRODUCTS_BY_ID = gql`
     }
   }
 `;
+
+class ResourceListWithProducts extends React.Component {
+  static contextType = Context;
+
+  render() {
+    const app = this.context;
+
+    return(
+      // https://softchris.github.io/pages/graphql-apollo-client.html#set-up
+      <Query query={GET_PRODUCTS_BY_ID} variables={{ ids: store.get('ids') }}>
+        {({data, loading, error}) => {
+          if (loading) return <div>Loading…</div>;
+          if (error) return <div>{error.message}</div>
+        }}
+      </Query>
+    );
+  }
+}
