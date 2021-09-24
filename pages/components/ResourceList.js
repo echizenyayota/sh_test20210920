@@ -43,18 +43,68 @@ const GET_PRODUCTS_BY_ID = gql`
 
 class ResourceListWithProducts extends React.Component {
   static contextType = Context;
-
   render() {
     const app = this.context;
-
-    return(
+    return (
       // https://softchris.github.io/pages/graphql-apollo-client.html#set-up
       <Query query={GET_PRODUCTS_BY_ID} variables={{ ids: store.get('ids') }}>
         {({data, loading, error}) => {
           if (loading) return <div>Loading…</div>;
           if (error) return <div>{error.message}</div>
+
+          return (
+            <Card>
+              <ResourceList
+                showHeader
+                resourceName={{ singular: 'Product', plural: 'Products' }}
+                items={data.nodes}
+                renderItem={item =>{
+                  const media = (
+                    <Thumbnail
+                      source={
+                        item.images.edges[0]
+                          ? item.images.edges[0].node.originalSrc
+                          : ''
+                      }
+                      alt={
+                        item.images.edges[0]
+                          ? item.images.edges[0].node.altText
+                          : ''
+                      }
+                    />
+                  );
+                  const price = item.variants.edges[0].node.price;
+                  return (
+                    <ResourceList.Item
+                        id={item.id}
+                        media={media}
+                        accessibilityLabel={`View details for ${item.title}`}
+                        onClick={() => {
+                          store.set('item', item);
+                        }}
+                    >
+                      <Stack>
+                        <Stack.Item fill>
+                          <h3>
+                            <TextStyle variation="strong">
+                              {item.title}
+                            </TextStyle>
+                          </h3>
+                        </Stack.Item>
+                        <Stack.Item>
+                          <p>${price}</p>
+                        </Stack.Item>
+                      </Stack>
+                    </ResourceList.Item>
+                  );
+                }}            
+              />
+            </Card>
+          );
         }}
       </Query>
     );
   }
 }
+
+export default ResourceListWithProducts;
