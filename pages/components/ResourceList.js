@@ -1,6 +1,6 @@
 import React from 'react';
 import gql from 'graphql-tag';
-import { Query } from 'react-appolo';
+import { Query } from 'react-apollo';
 import {
   Card,
   ResourceList,
@@ -24,12 +24,12 @@ const GET_PRODUCTS_BY_ID = gql`
           edges {
             node {
               originalSrc
-              alttext
+              altText
             }
           }
         }
-        variants(fisrt: 1) {
-          edge {
+        variants(first: 1) {
+          edges {
             node {
               price
               id
