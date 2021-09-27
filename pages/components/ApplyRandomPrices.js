@@ -19,3 +19,50 @@ const UPDATE_PRICE = gql`
   }
 `;
 
+class ApplyRandomPrices extends React.Component {
+  static contextType = Context;
+  render () {
+    return (
+      <Mutation mutation={UPDATE_PRICE}>
+        {(handleSubmit, {error, data}) => {
+          const [hasResults, setHasResults] = useState(false);
+          const showError = error && (
+            <Banner status="critcal">{error.message}</Banner>
+          );
+          const showToast = hasResults && (
+            <Toast
+              content="Successfully updated!"
+              onDismiss={() => setHasResults(false)}
+            />
+          );
+
+          return (
+            <Frame>
+              {showToast}
+              <Layout.Section>
+              {showError}
+              </Layout.Section>
+
+              <Layout.Section>
+                <Stack distribution={"center"}>
+                  <Button
+                    primary
+                    textAlign={"center"}
+                    onClick={() => {
+                      
+                    }}
+
+                  >
+                    Randomize prices
+                  </Button>
+                </Stack>
+              </Layout.Section>
+            </Frame>
+          );
+        }}
+      </Mutation>
+    );
+  }
+
+}
+
