@@ -10,7 +10,7 @@ import {
 } from '@shopify/polaris';
 import store from 'store-js';
 import { Redirect } from '@shopify/app-bridge/actions';
-import { Context, context } from '@shopify/app-bridge-react';
+import { Context } from '@shopify/app-bridge-react';
 
 const GET_PRODUCTS_BY_ID = gql`
   query getProducts ($ids: [ID!]!) {
