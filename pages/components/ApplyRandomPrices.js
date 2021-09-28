@@ -49,9 +49,23 @@ class ApplyRandomPrices extends React.Component {
                     primary
                     textAlign={"center"}
                     onClick={() => {
-                      
-                    }}
+                      let promise = new Promise((resolve) => resolve());
+                      // console.log(this.props.selectedItems);
+                      for (const variantID in this.props.selectedItems) {
+                        const price = Math.random().toPrecision(3) * 10;
+                        const productVaraiableInput = {
+                          id: this.props.selectedItems[variantId].variants.edges[0].node.id,
+                          price: price
+                        };
 
+                        promise = promise.then(() => handleSubmit({ variables: {
+                          input: productVaraiableInput }}));
+                      }
+
+                      if (promise) {
+                        promise.then(() => this.props.onUpdate().then(() => setHasResults(true)));
+                      }}
+                  }
                   >
                     Randomize prices
                   </Button>
@@ -63,6 +77,7 @@ class ApplyRandomPrices extends React.Component {
       </Mutation>
     );
   }
-
 }
+
+export default ApplyRandomPrices;
 
