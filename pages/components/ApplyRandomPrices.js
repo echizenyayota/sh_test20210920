@@ -6,12 +6,12 @@ import { Context } from '@shopify/app-bridge-react';
 
 // GraphQL mutation that updates the prices of products
 const UPDATE_PRICE = gql`
-  mutation productVarainatUpdate($input: ProductVaraiantInput!) {
-    productVaraiantUpdate(input: $input) {
+  mutation productVariantUpdate($input: ProductVariantInput!) {
+    productVariantUpdate(input: $input) {
       product {
         title
       }
-      productVaraint {
+      productVariant {
         id
         price
       }
@@ -27,11 +27,11 @@ class ApplyRandomPrices extends React.Component {
         {(handleSubmit, {error, data}) => {
           const [hasResults, setHasResults] = useState(false);
           const showError = error && (
-            <Banner status="critcal">{error.message}</Banner>
+            <Banner status="critical">{error.message}</Banner>
           );
           const showToast = hasResults && (
             <Toast
-              content="Successfully updated!"
+              content="Successfully updated"
               onDismiss={() => setHasResults(false)}
             />
           );
@@ -50,16 +50,15 @@ class ApplyRandomPrices extends React.Component {
                     textAlign={"center"}
                     onClick={() => {
                       let promise = new Promise((resolve) => resolve());
-                      // console.log(this.props.selectedItems);
-                      for (const variantID in this.props.selectedItems) {
+                      for (const variantId in this.props.selectedItems) {
                         const price = Math.random().toPrecision(3) * 10;
-                        const productVaraiableInput = {
+                        const productVariableInput = {
                           id: this.props.selectedItems[variantId].variants.edges[0].node.id,
-                          price: price
+                          price: price, 
                         };
 
                         promise = promise.then(() => handleSubmit({ variables: {
-                          input: productVaraiableInput }}));
+                          input: productVariableInput }}));
                       }
 
                       if (promise) {
